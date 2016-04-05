@@ -1,0 +1,37 @@
+* {
+  box-sizing: border-box;
+}
+
+$purple: #50098F;
+$red: #f00;
+
+body {
+  font-family: serif;
+  background-color: $purple;
+  color: $red;
+}
+
+main {
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    position: relative;
+  }
+  li {
+    width: 200px;
+    height: 150px;
+    border: 0.125rem solid $red;
+    margin: 1rem;
+    float: left;
+    padding: 1rem;
+    font-size: 2.5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .active {
+    background: $red;
+    color: $purple;
+  }
+}
