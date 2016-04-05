@@ -1,51 +1,32 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
+import { createContainer } from 'meteor/react-meteor-data';
+import { Slides } from '../../both/collections.js';
 
-const App = React.createClass({
+class App extends Component {
 
-  componentDidMount() {
-    this.autoAdvanceSlide();
-  },
+  constructor(props) {
+    super(props);
+  }
 
-  getInitialState() {
-    return {
-      active: 0,
-      slides: [
-        {_id: 0},
-        {_id: 1},
-        {_id: 2},
-        {_id: 3},
-        {_id: 4},
-        {_id: 5}
-      ],
-      duration: 1000,
-    };
-  },
-
-  getSlideClasses(currentSlideId) {
-    if (currentSlideId === this.state.active) {
+  getSlideClasses(slide) {
+    if (slide.isActive) {
       return 'active';
     }
-  },
-
-  autoAdvanceSlide() {
-    const nextId = (this.state.active + 1) % (this.state.slides.length);
-    this.setState({
-      active: nextId,
-    });
-    setTimeout(this.autoAdvanceSlide, this.state.duration);
-  },
+  }
 
   renderSlides() {
-    return this.state.slides.map((slide) => {
+    return this.props.slides.map((slide) => {
+      console.log(slide);
       return (
-        <li key={slide._id} className={this.getSlideClasses(slide._id)}>
+        <li key={slide._id} className={this.getSlideClasses(slide)}>
           {slide._id}
         </li>
       );
     });
-  },
+  }
 
   render() {
+    console.log
     return (
       <div className="container">
         <h1>Hello World!</h1>
@@ -56,7 +37,15 @@ const App = React.createClass({
         </main>
       </div>
     );
-  },
-});
+  }
+}
 
-export default App;
+App.propTypes = {
+ slides: PropTypes.array.isRequired,
+};
+
+export default createContainer(() => {
+  return {
+    slides: Slides.find({}).fetch(),
+  };
+}, App);
