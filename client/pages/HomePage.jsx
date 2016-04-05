@@ -2,8 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Slides } from '../../both/collections.js';
 
-class App extends Component {
-
+class HomePage extends Component {
   constructor(props) {
     super(props);
   }
@@ -16,20 +15,18 @@ class App extends Component {
 
   renderSlides() {
     return this.props.slides.map((slide) => {
-      console.log(slide);
       return (
         <li key={slide._id} className={this.getSlideClasses(slide)}>
-          {slide._id}
+          {slide.text}
         </li>
       );
     });
   }
 
   render() {
-    console.log
     return (
       <div className="container">
-        <h1>Hello World!</h1>
+        <h1>Sync Screen Test</h1>
         <main>
           <ul>
             { this.renderSlides() }
@@ -40,7 +37,7 @@ class App extends Component {
   }
 }
 
-App.propTypes = {
+HomePage.propTypes = {
  slides: PropTypes.array.isRequired,
 };
 
@@ -48,4 +45,4 @@ export default createContainer(() => {
   return {
     slides: Slides.find({}).fetch(),
   };
-}, App);
+}, HomePage);
